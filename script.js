@@ -63,7 +63,9 @@ async function loadCards() {
     if (clickedCard) clickedCard.classList.toggle('flipped');
   });
 
-  // Lazy loading with fade + delay on reveal
+  // Lazy loading with staggered fade
+  let staggerDelay = 0;
+
   const observer = new IntersectionObserver((entries, obs) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -73,7 +75,8 @@ async function loadCards() {
         img.onload = () => {
           setTimeout(() => {
             img.classList.add('loaded');
-          }, 100); // delay for fade effect
+          }, staggerDelay);
+          staggerDelay += 150; // ⏳ cascading delay
         };
 
         obs.unobserve(img);
