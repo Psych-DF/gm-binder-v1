@@ -25,13 +25,7 @@ body {
   width: 100%;
   padding-top: 100%;
   transform-style: preserve-3d;
-  transition: transform 0.6s, filter 0.6s ease;
-}
-
-/* Lighten the whole card slightly while flipping */
-.card.flipped .card-inner {
-  transform: rotateY(180deg);
-  filter: brightness(1.15);
+  transition: transform 0.6s ease;
 }
 
 .card-front,
@@ -116,4 +110,22 @@ body {
 @keyframes pulse {
   0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
   50% { transform: translate(-50%, -50%) scale(1.8); opacity: 1; }
+}
+
+.card-content {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-style: preserve-3d;
+  transition: filter 0.6s ease;
+}
+
+.card.flipped .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card.flipped .card-content {
+  filter: brightness(1.15);
 }
