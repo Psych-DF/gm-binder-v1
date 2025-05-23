@@ -1,0 +1,29 @@
+{
+  "name": "Artwork #24",
+  "attributes": [
+    {
+      "trait_type": "bg",
+      "value": "__BG6"
+    },
+    {
+      "trait_type": "b",
+      "value": "__B8"
+    },
+    {
+      "trait_type": "h",
+      "value": "__H24"
+    },
+    {
+      "trait_type": "m",
+      "value": "__M5"
+    },
+    {
+      "trait_type": "s",
+      "value": "__S14"
+    },
+    {
+      "trait_type": "e",
+      "value": "__E14"
+    }
+  ]
+}
