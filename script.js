@@ -50,8 +50,13 @@ async function loadCards() {
 
       cardFront.appendChild(img);
       cardFront.appendChild(loadingDot);
-      cardInner.appendChild(cardFront);
-      cardInner.insertAdjacentHTML('beforeend', backHTML);
+
+      const cardContent = document.createElement('div');
+      cardContent.className = 'card-content';
+      cardContent.appendChild(cardFront);
+      cardContent.insertAdjacentHTML('beforeend', backHTML);
+
+      cardInner.appendChild(cardContent);
       card.appendChild(cardInner);
       grid.appendChild(card);
     } catch (err) {
