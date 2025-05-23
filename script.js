@@ -1,4 +1,4 @@
-const imageCount = 20;
+const imageCount = 40;
 const grid = document.getElementById('grid');
 
 async function loadCards() {
