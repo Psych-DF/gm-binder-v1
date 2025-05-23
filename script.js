@@ -1,7 +1,7 @@
 const imageCount = 40;
 const grid = document.getElementById('grid');
 
-async function loadCards() {
+async function loadCardsSequentially() {
   for (let i = 1; i <= imageCount; i++) {
     const imageSrc = `output/${i}.png`;
     const jsonSrc = `output/${i}.json`;
@@ -40,13 +40,17 @@ async function loadCards() {
       cardFront.className = 'card-front';
 
       const img = document.createElement('img');
-      img.dataset.src = imageSrc;
+      img.src = imageSrc;
       img.alt = `Card ${i}`;
       img.classList.add('lazy-image');
 
-      img.onload = () => {
-        img.classList.add('loaded');
-      };
+      await new Promise(resolve => {
+        img.onload = () => {
+          img.classList.add('loaded');
+          setTimeout(resolve, 150); // ⏳ delay for drama
+        };
+        img.onerror = () => setTimeout(resolve, 150);
+      });
 
       cardFront.appendChild(img);
       cardInner.appendChild(cardFront);
@@ -66,21 +70,6 @@ async function loadCards() {
     });
     if (clickedCard) clickedCard.classList.toggle('flipped');
   });
-
-  // Lazy load logic
-  const observer = new IntersectionObserver((entries, obs) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const img = entry.target;
-        img.src = img.dataset.src;
-        obs.unobserve(img);
-      }
-    });
-  }, {
-    rootMargin: '100px',
-  });
-
-  document.querySelectorAll('.lazy-image').forEach(img => observer.observe(img));
 }
 
-loadCards();
+loadCardsSequentially();
