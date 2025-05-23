@@ -39,12 +39,17 @@ async function loadCards() {
       const cardFront = document.createElement('div');
       cardFront.className = 'card-front';
 
+      // Create image and loading dot
       const img = document.createElement('img');
       img.dataset.src = imageSrc;
       img.alt = `Card ${i}`;
       img.classList.add('lazy-image');
 
+      const loadingDot = document.createElement('div');
+      loadingDot.className = 'loading-dot';
+
       cardFront.appendChild(img);
+      cardFront.appendChild(loadingDot);
       cardInner.appendChild(cardFront);
       cardInner.insertAdjacentHTML('beforeend', backHTML);
       card.appendChild(cardInner);
@@ -63,20 +68,27 @@ async function loadCards() {
     if (clickedCard) clickedCard.classList.toggle('flipped');
   });
 
-  // Lazy loading with staggered fade
+  // Lazy loading with staggered fade + dot
   let staggerDelay = 0;
 
   const observer = new IntersectionObserver((entries, obs) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         const img = entry.target;
+        const loadingDot = img.parentElement.querySelector('.loading-dot');
+
         img.src = img.dataset.src;
 
         img.onload = () => {
           setTimeout(() => {
             img.classList.add('loaded');
+            if (loadingDot) loadingDot.remove();
           }, staggerDelay);
-          staggerDelay += 150; // ⏳ cascading delay
+          staggerDelay += 150;
+        };
+
+        img.onerror = () => {
+          if (loadingDot) loadingDot.remove();
         };
 
         obs.unobserve(img);
